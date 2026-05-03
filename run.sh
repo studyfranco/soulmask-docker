@@ -92,7 +92,7 @@ if [ -n "${SERVERPASSWORD}" ]; then
 fi
 
 if [ -n "${SERVERADMINPASSWORD}" ]; then
-    LAUNCH_ARGS="${SERVERADMINPASSWORD} -adminpsw=\"${SERVERADMINPASSWORD}\""
+    LAUNCH_ARGS="${LAUNCH_ARGS} -adminpsw=\"${SERVERADMINPASSWORD}\""
 fi
 
 if [ -n "${RCON_PORT}" ] && [ -n "${RCON_PASSWORD}" ]; then
@@ -110,7 +110,7 @@ fi
 
 cd /config/gamefiles || exit 1
 
-exec ./StartServer.sh -log -SteamServerName="${SERVER_NAME}" -Port=${SERVER_PORT} -QueryPort=${SERVER_QUERY_PORT} -${GAME_MODE} -MaxPlayers=${MAXPLAYERS} ${LAUNCH_ARGS} -backup=${BACKUP} -saving=${SAVING} -online=Steam -forcepassthrough ${extra_opts[@]} &
+exec ./WSServer.sh -server -log -SteamServerName="${SERVER_NAME}" -Port=${SERVER_PORT} -QueryPort=${SERVER_QUERY_PORT} -${GAME_MODE} -MaxPlayers=${MAXPLAYERS} ${LAUNCH_ARGS} -backup=${BACKUP} -saving=${SAVING} -online=Steam -forcepassthrough ${extra_opts[@]} &
 
 # Capture Soulmask server start script pid
 init_pid=$!
