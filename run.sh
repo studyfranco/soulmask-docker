@@ -32,15 +32,6 @@ if [ -f "${GAMECONFIGDIR}/Engine.ini" ]; then
     tar cf - "/config/saves" "/config/gameconfigs" | pigz -9 -p 12 - > "/config/backups/${launchDate}.tar.gz"
 fi
 
-mkdir -p "${GAMEBASECONFIGDIR}"
-
-if [ ! -L "${GAMECONFIGDIR}" ]; then
-    ln -sf "/config/gameconfigs" "${GAMECONFIGDIR}"
-fi
-
-if [ ! -L "${GAMESAVESDIR}" ]; then
-    ln -sf "/config/saves" "${GAMESAVESDIR}"
-fi
 
 ## Initialise and update files
 if ! [[ "${SKIPUPDATE,,}" == "true" ]]; then
@@ -109,6 +100,37 @@ else
 fi
 
 cd /config/gamefiles || exit 1
+
+exec ./WSServer.sh -server -SLIENT -log -UTF8Output -SteamServerName="${SERVER_NAME}" -Port=${SERVER_PORT} -QueryPort=${SERVER_QUERY_PORT} -${GAME_MODE} -MaxPlayers=${MAXPLAYERS} ${LAUNCH_ARGS} -backup=${BACKUP} -saving=${SAVING} -online=Steam -forcepassthrough ${extra_opts[@]} &
+
+# Capture Soulmask server start script pid
+init_pid=$!
+
+# Capture Soulmask server binary pid
+timeout=0
+while [ $timeout -lt 11 ]; do
+    if ps -e | grep "WSServer-Linux"; then
+        soulmask_pid=$(ps -e | grep "WSServer-Linux" | awk '{print $1}')
+        break
+    elif [ $timeout -eq 10 ]; then
+        echo "$(timestamp) ERROR: Timed out waiting for WSServer-Linux to be running"
+        exit 1
+    fi
+    sleep 10
+    ((timeout++))
+done
+
+kill $init_pid
+
+mkdir -p "${GAMEBASECONFIGDIR}"
+
+if [ ! -L "${GAMECONFIGDIR}" ]; then
+    ln -sf "/config/gameconfigs" "${GAMECONFIGDIR}"
+fi
+
+if [ ! -L "${GAMESAVESDIR}" ]; then
+    ln -sf "/config/saves" "${GAMESAVESDIR}"
+fi
 
 exec ./WSServer.sh -server -SLIENT -log -UTF8Output -SteamServerName="${SERVER_NAME}" -Port=${SERVER_PORT} -QueryPort=${SERVER_QUERY_PORT} -${GAME_MODE} -MaxPlayers=${MAXPLAYERS} ${LAUNCH_ARGS} -backup=${BACKUP} -saving=${SAVING} -online=Steam -forcepassthrough ${extra_opts[@]} &
 
