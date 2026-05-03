@@ -140,6 +140,7 @@ init_pid=$!
 # Capture Soulmask server binary pid
 timeout=0
 while [ $timeout -lt 11 ]; do
+    sleep 30
     if ps -e | grep "WSServer-Linux"; then
         soulmask_pid=$(ps -e | grep "WSServer-Linux" | awk '{print $1}')
         break
