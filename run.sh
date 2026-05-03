@@ -60,31 +60,29 @@ else
     printf "Skipping update as flag is set\\n"
 fi
 
-if [ ! -f "${GAMECONFIGDIR}/Engine.ini" ]; then
-    cp "/config/gamefiles/DefaultEngine.ini" "/config/gameconfigs/Engine.ini"
-    sed -i "s/saving=\"[^\"]*\"/saving=\"${SAVING}\"/" "/config/gameconfigs/Engine.ini"
-    sed -i "s/backup=\"[^\"]*\"/backup=\"${BACKUP}\"/" "/config/gameconfigs/Engine.ini"
-    sed -i "s/SteamServerName=\"[^\"]*\"/SteamServerName=\"${SERVER_NAME}\"/" "/config/gameconfigs/Engine.ini"
-fi
-
 if ! [[ "$MAXPLAYERS" =~ $NUMCHECK ]] ; then
     printf "Invalid max players number given: %s\\n" "${MAXPLAYERS}"
     MAXPLAYERS=32
 fi
-sed -i "s/MaxPlayers=[0-9]*/MaxPlayers=${MAXPLAYERS}/" "/config/gameconfigs/Engine.ini"
 
 if ! [[ "$SERVER_PORT" =~ $NUMCHECK ]] ; then
     printf "Invalid server port given: %s\\n" "${SERVER_PORT}"
     SERVER_PORT=8777
 fi
-sed -i "s/Port=[0-9]*/Port=${SERVER_PORT}/" "/config/gameconfigs/Engine.ini"
 
 if ! [[ "$SERVER_QUERY_PORT" =~ $NUMCHECK ]] ; then
     printf "Invalid server querry given: %s\\n" "${SERVER_QUERY_PORT}"
     SERVER_QUERY_PORT=27015
 fi
-sed -i "s/GameServerQueryPort=[0-9]*/GameServerQueryPort=${SERVER_QUERY_PORT}/" "/config/gameconfigs/Engine.ini"
 
+if [ -f "${GAMECONFIGDIR}/Engine.ini" ]; then
+    sed -i "s/saving=\"[^\"]*\"/saving=\"${SAVING}\"/" "/config/gameconfigs/Engine.ini"
+    sed -i "s/backup=\"[^\"]*\"/backup=\"${BACKUP}\"/" "/config/gameconfigs/Engine.ini"
+    sed -i "s/SteamServerName=\"[^\"]*\"/SteamServerName=\"${SERVER_NAME}\"/" "/config/gameconfigs/Engine.ini"
+    sed -i "s/GameServerQueryPort=[0-9]*/GameServerQueryPort=${SERVER_QUERY_PORT}/" "/config/gameconfigs/Engine.ini"
+    sed -i "s/Port=[0-9]*/Port=${SERVER_PORT}/" "/config/gameconfigs/Engine.ini"
+    sed -i "s/MaxPlayers=[0-9]*/MaxPlayers=${MAXPLAYERS}/" "/config/gameconfigs/Engine.ini"
+fi
 #bEnablePlayerToPlayerDamage=False,bEnableFriendlyFire=False
 
 LAUNCH_ARGS=""
