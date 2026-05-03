@@ -16,6 +16,7 @@ Issues are welcome but pull requests are even more welcome if you can!
 ## Specials thanks
 
 My work are based on the docker server of satisfactory from [wolveix](https://github.com/wolveix/satisfactory-server)
+
 And I adapted for soulmask with the work of [jsknnr](https://github.com/jsknnr/soulmask-dedicated-server)
 
 ## Background
@@ -29,6 +30,7 @@ I used my previous scripts from Frozen Flame, and now you have this image.
 ## Setup
 
 For people who want use the image you can use [docker compose](https://docs.docker.com/compose/) up -d:
+
 ```yaml
 services:
   soulmask:
@@ -70,12 +72,15 @@ services:
       - "/config/gamefiles/steamapps/temp:uid=2198,gid=2198"
     restart: "unless-stopped"
 ```
+
 You can use the safer way with ports forwarding, or the network mod host.
 
 Or you can use a quick and dirty `docker run`:
+
 ```bash
-run -d --net=host -v </path/to/config>:/config --name=soulmask-server ghcr.io/studyfranco/soulmask-docker:main 
+run -d --net=host -v </path/to/config>:/config --name=soulmask-server ghcr.io/studyfranco/soulmask-docker:master 
 ```
+
 This is currently using the host network simplicity but you should be able to map the ports how you wish without it, but that's untested by me.
 
 ## Environment Variables
@@ -95,8 +100,8 @@ This is currently using the host network simplicity but you should be able to ma
 
 ## Features in this docker
 
- - Backup at each start
- - Automatic edition of basic server game configs
+- Backup at each start
+- Automatic edition of basic server game configs
 
 I am open to improve some features
 
@@ -105,4 +110,5 @@ I am open to improve some features
 You can edit the /config/gameconfigs/Engine.ini to choose somes other options.
 
 ## Last Update
+
 2026-04-15
