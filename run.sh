@@ -117,20 +117,6 @@ exec ./WSServer.sh ${SERVER_LEVEL} -server -SLIENT -log -UTF8Output -SteamServer
 # Capture Soulmask server start script pid
 init_pid=$!
 
-# Capture Soulmask server binary pid
-timeout=0
-while [ $timeout -lt 11 ]; do
-    if ps -e | grep "WSServer-Linux"; then
-        soulmask_pid=$(ps -e | grep "WSServer-Linux" | awk '{print $1}')
-        break
-    elif [ $timeout -eq 10 ]; then
-        echo "$(timestamp) ERROR: Timed out waiting for WSServer-Linux to be running"
-        exit 1
-    fi
-    sleep 10
-    ((timeout++))
-done
-
 # Hold us open until we receive a SIGTERM
 wait $init_pid
 
