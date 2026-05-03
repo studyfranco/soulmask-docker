@@ -28,6 +28,7 @@ services:
       - "BACKUP=900"
       - "SAVING=600"
       - "GAME_MODE=pve"
+      - "SERVER_LEVEL=Level01_Main"
       - "MOD_ID_LIST="
       - "TZ=Etc/UTC"
     tmpfs:

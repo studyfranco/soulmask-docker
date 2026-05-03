@@ -110,9 +110,9 @@ fi
 
 cd /config/gamefiles || exit 1
 
-echo "./WSServer.sh -server -SLIENT -log -UTF8Output -SteamServerName=\"${SERVER_NAME}\" -Port=${SERVER_PORT} -QueryPort=${SERVER_QUERY_PORT} -${GAME_MODE} -MaxPlayers=${MAXPLAYERS} ${LAUNCH_ARGS} -backup=${BACKUP} -saving=${SAVING} -online=Steam -forcepassthrough ${extra_opts[@]}"
+echo "./WSServer.sh ${SERVER_LEVEL} -server -SLIENT -log -UTF8Output -SteamServerName=\"${SERVER_NAME}\" -Port=${SERVER_PORT} -QueryPort=${SERVER_QUERY_PORT} -${GAME_MODE} -MaxPlayers=${MAXPLAYERS} ${LAUNCH_ARGS} -backup=${BACKUP} -saving=${SAVING} -online=Steam -forcepassthrough ${extra_opts[@]}"
 sleep 20
-exec ./WSServer.sh -server -SLIENT -log -UTF8Output -SteamServerName="${SERVER_NAME}" -Port=${SERVER_PORT} -QueryPort=${SERVER_QUERY_PORT} -${GAME_MODE} -MaxPlayers=${MAXPLAYERS} ${LAUNCH_ARGS} -backup=${BACKUP} -saving=${SAVING} -online=Steam -forcepassthrough ${extra_opts[@]} &
+exec ./WSServer.sh ${SERVER_LEVEL} -server -SLIENT -log -UTF8Output -SteamServerName="${SERVER_NAME}" -Port=${SERVER_PORT} -QueryPort=${SERVER_QUERY_PORT} -${GAME_MODE} -MaxPlayers=${MAXPLAYERS} ${LAUNCH_ARGS} -backup=${BACKUP} -saving=${SAVING} -online=Steam -forcepassthrough ${extra_opts[@]} &
 
 # Capture Soulmask server start script pid
 init_pid=$!

@@ -10,7 +10,7 @@ RUN set -x \
     && gosu nobody true
 
 RUN mkdir -p /config \
- && chown steam:steam /config
+    && chown steam:steam /config
 
 COPY init.sh /
 
@@ -36,6 +36,7 @@ ENV SERVER_NAME="SoulmaskServerByMe" \
     SAVING=600 \
     SKIPUPDATE="false" \
     GAME_MODE="pve" \
+    SERVER_LEVEL="Level01_Main" \
     MOD_ID_LIST= 
 
 
