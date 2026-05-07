@@ -65,6 +65,11 @@ if ! [[ "$MAXPLAYERS" =~ $NUMCHECK ]] ; then
     MAXPLAYERS=32
 fi
 
+if ! [[ "${SERVER_ID}" =~ $NUMCHECK ]] ; then
+    printf "Invalid server ID: %s\\n" "${MAXPLAYERS}"
+    SERVER_ID=1
+fi
+
 if ! [[ "$SERVER_PORT" =~ $NUMCHECK ]] ; then
     printf "Invalid server port given: %s\\n" "${SERVER_PORT}"
     SERVER_PORT=8777
@@ -95,6 +100,14 @@ if [ -n "${SERVERADMINPASSWORD}" ]; then
     LAUNCH_ARGS="${LAUNCH_ARGS} -adminpsw=\"${SERVERADMINPASSWORD}\""
 fi
 
+if [ -n "${MAINSERVEURPORT}" ]; then
+    LAUNCH_ARGS="${LAUNCH_ARGS} -mainserverport=${MAINSERVEURPORT}"
+fi
+
+if [ -n "${TOMAINSERVER}" ]; then
+    LAUNCH_ARGS="${LAUNCH_ARGS} -clientserverconnect=${TOMAINSERVER}"
+fi
+
 if [ -n "${RCON_PORT}" ] && [ -n "${RCON_PASSWORD}" ]; then
     LAUNCH_ARGS="${LAUNCH_ARGS} -rconpsw=${RCON_PASSWORD} -rconport=${RCON_PORT}"
 fi
@@ -110,7 +123,7 @@ fi
 
 cd /config/gamefiles || exit 1
 
-exec ./WSServer.sh ${SERVER_LEVEL} -server -SLIENT -log -UTF8Output -SteamServerName="${SERVER_NAME}" -Port=${SERVER_PORT} -QueryPort=${SERVER_QUERY_PORT} -${GAME_MODE} -MaxPlayers=${MAXPLAYERS} ${LAUNCH_ARGS} -backup=${BACKUP} -saving=${SAVING} -online=Steam -forcepassthrough ${extra_opts[@]} &
+exec ./WSServer.sh ${SERVER_LEVEL} -server -SLIENT -log -UTF8Output -serverid=${SERVER_ID} -SteamServerName="${SERVER_NAME}" -Port=${SERVER_PORT} -QueryPort=${SERVER_QUERY_PORT} -${GAME_MODE} -MaxPlayers=${MAXPLAYERS} ${LAUNCH_ARGS} -backup=${BACKUP} -saving=${SAVING} -online=Steam -forcepassthrough ${extra_opts[@]} &
 
 # Capture Soulmask server start script pid
 init_pid=$!

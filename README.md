@@ -109,6 +109,96 @@ I am open to improve some features
 
 You can edit the /config/gameconfigs/Engine.ini to choose somes other options.
 
+## Cluster example
+
+```yaml
+services:
+  soulmask:
+    container_name: soulmask-server
+    hostname: soulmask-server
+    image: ghcr.io/studyfranco/soulmask-docker:master
+    #network_mode: "host"
+    volumes:
+      - "/path/to/config:/config"
+    ports:
+      - 8777:8777/udp
+      - 27015:27015/udp
+      #- 27017:27017/udp
+    expose:
+      - 8777/udp
+      - 27015/udp
+      #- 27017/udp
+    environment:
+      - "SERVER_NAME=SoulmaskServerByMe"
+      - "SERVER_PORT=8777"
+      - "SERVER_QUERY_PORT=27015"
+      #- "RCON_PORT=25575"
+      #- "RCON_PASSWORD=password"
+      - "MAXPLAYERS=32"
+      - "SERVERPASSWORD=password"
+      - "SERVERADMINPASSWORD=password"
+      - "PUID=2198"
+      - "PGID=2198"
+      - "BACKUP=900"
+      - "SAVING=600"
+      - "GAME_MODE=pve"
+      - "MOD_ID_LIST="
+      - "TZ=Etc/UTC"
+    tmpfs:
+      - "/run:exec,mode=777"
+      - "/tmp:exec,mode=777"
+      - "/tmp/dumps:exec,mode=777"
+      - "/var/tmp:exec,mode=777"
+      - "/config/gamefiles/steamapps/temp:uid=2198,gid=2198"
+    restart: "unless-stopped"
+
+  soulmask2:
+    container_name: soulmask2-server
+    hostname: soulmask2-server
+    image: ghcr.io/studyfranco/soulmask-docker:master
+    #network_mode: "host"
+    volumes:
+      - "/path/to/config2:/config"
+      - "/path/to/config/gamefiles:/config/gamefiles"
+    ports:
+      - 8778:8778/udp
+      - 27016:27016/udp
+      #- 27017:27017/udp
+    expose:
+      - 8778/udp
+      - 27016/udp
+      #- 27017/udp
+    environment:
+      - "SERVER_NAME=SoulmaskServerByMe2"
+      - "SERVER_PORT=8778"
+      - "SERVER_QUERY_PORT=27016"
+      #- "RCON_PORT=25575"
+      #- "RCON_PASSWORD=password"
+      - "MAXPLAYERS=32"
+      - "SERVERPASSWORD=password"
+      - "SERVERADMINPASSWORD=password"
+      - "PUID=2198"
+      - "PGID=2198"
+      - "BACKUP=900"
+      - "SAVING=600"
+      - "GAME_MODE=pve"
+      - "SERVER_LEVEL=DLC_Level01_Main"
+      - "SERVER_ID=2"
+      - "TOMAINSERVER=soulmask-server:20000"
+      - "MAINSERVEURPORT="
+      - "MOD_ID_LIST="
+      - "TZ=Etc/UTC"
+    tmpfs:
+      - "/run:exec,mode=777"
+      - "/tmp:exec,mode=777"
+      - "/tmp/dumps:exec,mode=777"
+      - "/var/tmp:exec,mode=777"
+      - "/config/gamefiles/steamapps/temp:uid=2198,gid=2198"
+    restart: "unless-stopped"
+    depends_on:
+      - soulmask
+```
+
 ## Last Update
+
 2026-05-07
-2026-04-15

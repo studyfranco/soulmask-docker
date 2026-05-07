@@ -37,7 +37,9 @@ ENV SERVER_NAME="SoulmaskServerByMe" \
     SKIPUPDATE="false" \
     GAME_MODE="pve" \
     SERVER_LEVEL="Level01_Main" \
-    MOD_ID_LIST= 
-
+    SERVER_ID=1 \
+    MAINSERVEURPORT=20000 \
+    TOMAINSERVER= \
+    MOD_ID_LIST=
 
 ENTRYPOINT [ "/init.sh" ]
