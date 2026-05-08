@@ -31,6 +31,7 @@ ENV SERVER_NAME="SoulmaskServerByMe" \
     PGID=2198 \
     GAMEBASECONFIGDIR="/config/gamefiles/WS/Saved/Config" \
     GAMECONFIGDIR="/config/gamefiles/WS/Saved/Config/LinuxServer" \
+    GAMEPLAYCONFIG="/config/gamefiles/WS/Saved/GameplaySettings" \
     GAMESAVESDIR="/config/gamefiles/WS/Saved/Worlds" \
     BACKUP=900 \
     SAVING=600 \

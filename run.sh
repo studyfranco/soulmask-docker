@@ -28,8 +28,8 @@ trap 'shutdown' TERM
 NUMCHECK='^[0-9]+$'
 launchDate=`date +"%Y_%m_%d_%H_%M_%s"`
 
-if [ -f "${GAMECONFIGDIR}/Engine.ini" ]; then
-    tar cf - "/config/saves" "/config/gameconfigs" | pigz -9 -p 12 - > "/config/backups/${launchDate}.tar.gz"
+if [ -f "${GAMEPLAYCONFIG}/GameXishu.json" ]; then
+    tar cf - "/config/saves" "/config/gameconfigs" "/config/gameplayconfig" | pigz -9 -p 12 - > "/config/backups/${launchDate}.tar.gz"
 fi
 
 mkdir -p "${GAMEBASECONFIGDIR}"
@@ -40,6 +40,10 @@ fi
 
 if [ ! -L "${GAMESAVESDIR}" ]; then
     ln -sf "/config/saves" "${GAMESAVESDIR}"
+fi
+
+if [ ! -L "${GAMEPLAYCONFIG}" ]; then
+    ln -sf "/config/gameplayconfig" "${GAMEPLAYCONFIG}"
 fi
 
 ## Initialise and update files
