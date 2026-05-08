@@ -29,7 +29,7 @@ NUMCHECK='^[0-9]+$'
 launchDate=`date +"%Y_%m_%d_%H_%M_%s"`
 
 if [ -f "${GAMEPLAYCONFIG}/GameXishu.json" ]; then
-    tar cf - "/config/saves" "/config/gameconfigs" "/config/gameplayconfig" | pigz -9 -p 12 - > "/config/backups/${launchDate}.tar.gz"
+    tar cf - "/config/saves" "/config/gameconfigs" "/config/gameplayconfig" "/config/savesAccount" | pigz -9 -p 12 - > "/config/backups/${launchDate}.tar.gz"
 fi
 
 mkdir -p "${GAMEBASECONFIGDIR}"
@@ -40,6 +40,10 @@ fi
 
 if [ ! -L "${GAMESAVESDIR}" ]; then
     ln -sf "/config/saves" "${GAMESAVESDIR}"
+fi
+
+if [ ! -L "${GAMEACCOUNTSAVEDIR}" ]; then
+    ln -sf "/config/savesAccount" "${GAMEACCOUNTSAVEDIR}"
 fi
 
 if [ ! -L "${GAMEPLAYCONFIG}" ]; then

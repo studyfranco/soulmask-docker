@@ -7,7 +7,7 @@
   
 </div>
 
-# Palworld Dedicated Server
+# Soulmask Dedicated Server
 
 Hello and welcome! Hopefully this can help anyone get up and running with Soulmask!
 
