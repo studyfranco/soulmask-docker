@@ -19,6 +19,8 @@ timestamp () {
 shutdown () {
     echo ""
     echo "$(timestamp) INFO: Received SIGTERM, shutting down gracefully"
+    printf "SaveAndExit 1\r\n" | nc -w 10 127.0.0.1 18888
+    sleep 10
     kill -2 $soulmask_pid
 }
 
