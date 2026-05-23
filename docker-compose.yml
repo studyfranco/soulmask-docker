@@ -38,3 +38,4 @@ services:
       - "/var/tmp:exec,mode=777"
       - "/config/gamefiles/steamapps/temp:uid=2198,gid=2198"
     restart: "unless-stopped"
+    stop_grace_period: 1m

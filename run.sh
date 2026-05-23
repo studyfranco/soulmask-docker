@@ -19,7 +19,7 @@ timestamp () {
 shutdown () {
     echo ""
     echo "$(timestamp) INFO: Received SIGTERM, shutting down gracefully"
-    printf "SaveAndExit 1\r\n" | nc -w 10 127.0.0.1 18888
+    printf "SaveAndExit 1\r\n" | nc -w 30 127.0.0.1 18888
     sleep 10
     kill -2 $soulmask_pid
 }
@@ -143,7 +143,10 @@ wait $init_pid
 
 # Handle post SIGTERM from here
 # Hold us open until WSServer-Linux pid closes, indicating full shutdown, then go home
-tail --pid=$soulmask_pid -f /dev/null
+if [ -n "$init_pid" ] && kill -0 "$init_pid" 2>/dev/null; then
+    echo "$(timestamp) INFO: Waiting for game binary (PID $init_pid) to completely disk-flush..."
+    tail --pid="$init_pid" -f /dev/null
+fi
 
 # o7
 echo "$(timestamp) INFO: Shutdown complete. Goodbye, Chieftain."
